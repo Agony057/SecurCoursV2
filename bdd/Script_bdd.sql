@@ -31,7 +31,7 @@ CREATE TABLE Casier(
 -- 
 CREATE TABLE Identite(
 	NoCarte VARCHAR(15) DEFAULT NULL,
-    id VARCHAR(10),
+    id VARCHAR(20),
     Nom VARCHAR(50) NOT NULL,
     Prenom VARCHAR (50) NOT NULL,
     Classe_id VARCHAR(15) NOT NULL,
