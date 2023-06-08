@@ -10,7 +10,7 @@ def selection_change(event):
     print("Élément sélectionné :", selected_item)
 
 # Liste des options de la liste déroulante
-options = ["Option 1", "Option 2", "Option 3", "Option 4"]
+options = ("Option 1", "Option 2", "Option 3", "Option 4")
 
 # Création de la liste déroulante
 dropdown = ttk.Combobox(window, values=options)

@@ -236,8 +236,6 @@ def switch_to_second_page():
     button_Retour.grid(row=62, columnspan=3)
 
 
-
-
 window = tk.Tk()
 
 # Chargement de l'image PNG
