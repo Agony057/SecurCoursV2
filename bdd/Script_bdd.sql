@@ -54,12 +54,12 @@ INSERT INTO Classe VALUES ('Bleu', 'Seconde Bac Pro TMA'),
 						('Or', 'Professeur');
 --
 INSERT INTO Identite(NoCarte, Nom, Prenom, Classe_id, Statut, id) VALUES
-							('000-000-000-000', 'BEAUDOUIN', 'Corentin', 'Or', 'ADMIN', 'BEACOR1'),
-							('111-111-111-111', 'MENNINGER', 'Jason', 'Jaune', NULL, 'MENJAS1'),
-							('222-222-222-222', 'ZELL', 'Renaud', 'Vert', NULL, 'ZELREN1'),
-							('333-333-333-333', 'TIJOU', 'Allan', 'Jaune', NULL, 'TIJALA1'),
-							('444-444-444-444', 'VIARDOT', 'Thibault', 'Vert', NULL, 'VIATHI1'),
-							('555-555-555-555', 'AGOZZINO', 'Anthony', 'Bleu', NULL, 'AGOANT1');
+							('12.153.12.2', 'BEAUDOUIN', 'Corentin', 'Or', 'ADMIN', 'BEACOR1'),
+							('170.1.62.61', 'MENNINGER', 'Jason', 'Jaune', NULL, 'MENJAS1'),
+							('64.105.61.61', 'ZELL', 'Renaud', 'Vert', NULL, 'ZELREN1'),
+							('4.232.61.61', 'TIJOU', 'Allan', 'Jaune', NULL, 'TIJALA1'),
+							('15.55.62.61', 'VIARDOT', 'Thibault', 'Vert', NULL, 'VIATHI1'),
+							('142.62.61.61', 'AGOZZINO', 'Anthony', 'Bleu', NULL, 'AGOANT1');
 -- 
 INSERT INTO Casier(id) VALUES (1),(2);
 -- 

@@ -24,7 +24,7 @@ def casier_libre_occupe(casier):
 
 def casier_occupe_libre(casier):
     req_casier_occupe_libre = "UPDATE Casier " \
-                    "SET Libre = TRUE-- " \
+                    "SET Libre = TRUE " \
                     f"WHERE id = '{casier}'"
 
 
@@ -65,6 +65,18 @@ def demande_ajout(nom, prenom, classe):
     return cursor.fetchone()[0]
 
 
+def liste_classe_eleve():
+    req_liste_classe_eleve = "SELECT id FROM Classe WHERE id != 'Or'"
+    cursor.execute(req_liste_classe_eleve)
+    return cursor.fetchall()
+
+
+def liste_casier_libre():
+    req_liste_casier_libre = "SELECT id FROM Casier WHERE Libre = TRUE"
+    cursor.execute(req_liste_casier_libre)
+    return cursor.fetchall()
+
+
 def ajout(uid, identifiant, nom, prenom, classe, casier):
     if len(uid) == 0 and len(casier) == 0:
         req_ajout = "INSERT INTO Identite(id, Nom, Prenom, Classe_id) VALUES " \
@@ -80,6 +92,7 @@ def ajout(uid, identifiant, nom, prenom, classe, casier):
                     f"('{identifiant}', '{uid}', '{nom}', '{prenom}', '{classe}', {casier})"
     cursor.execute(req_ajout)
     baseDeDonnees.commit()
+
 
 def modifier_eleve(id, uid, nom, prenom, classe, casier):
     if len(uid) == 0 and len(casier) == 0:
