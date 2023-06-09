@@ -6,7 +6,9 @@ cursor = baseDeDonnees.cursor()
 
 def demande_casier(casier):
     # retourne le nombre de personne qui ont le casier demandé
-    req_demande_casier = f"SELECT COUNT(*) FROM Identite WHERE Casier_id = '{casier}'"
+    req_demande_casier = f"SELECT COUNT(*) " \
+                         f"FROM Identite " \
+                         f"WHERE Casier_id = '{casier}'"
     cursor.execute(req_demande_casier)
     return cursor.fetchone()[0]
 
@@ -71,28 +73,36 @@ def casier_occupe_libre(casier):
 
 def identite_utilsateur_casier(casier):
     # retourne nom prenom classe d'un utilisateur par son casier
-    req_utilisateur_casier = f"SELECT Nom, Prenom, Classe_id FROM Identite WHERE Casier_id = {casier}"
+    req_utilisateur_casier = f"SELECT Nom, Prenom, Classe_id " \
+                             f"FROM Identite " \
+                             f"WHERE Casier_id = {casier}"
     cursor.execute(req_utilisateur_casier)
     return cursor.fetchone()
 
 
 def identifiant_existe(identifiant):
     # retourne le nombre de personnes qui ont déjà cet identifiant
-    req_identifiant_existe = f"SELECT COUNT(*) FROM Identite WHERE id = '{identifiant}'"
+    req_identifiant_existe = f"SELECT COUNT(*) " \
+                             f"FROM Identite " \
+                             f"WHERE id = '{identifiant}'"
     cursor.execute(req_identifiant_existe)
     return cursor.fetchone()[0]
 
 
 def uid_existe(uid):
     # retourne le nombre de personnes qui ont déjà cet uid
-    req_uid_existe = f"SELECT COUNT(*) FROM Identite WHERE NoCarte = '{uid}'"
+    req_uid_existe = f"SELECT COUNT(*) " \
+                     f"FROM Identite " \
+                     f"WHERE NoCarte = '{uid}'"
     cursor.execute(req_uid_existe)
     return cursor.fetchone()[0]
 
 
 def identite_utilisateur_uid(uid):
     # retourne le nom prenom classe d'un utilisateur par son uid
-    req_utilisateur_uid = f"SELECT Nom, Prenom, Classe_id FROM Identite WHERE NoCarte = '{uid}'"
+    req_utilisateur_uid = f"SELECT Nom, Prenom, Classe_id " \
+                          f"FROM Identite " \
+                          f"WHERE NoCarte = '{uid}'"
     cursor.execute(req_utilisateur_uid)
     return cursor.fetchone()
 
@@ -107,36 +117,64 @@ def efface_uid(uid):
 
 
 def demande_ajout(nom, prenom, classe):
-    # retourne le nombre de personne qui ont le meme nom prenom et classe
-    req_demande_ajout = f"SELECT COUNT(*) FROM Identite WHERE Nom = '{nom}' AND Prenom = '{prenom}' AND Classe_id = '{classe}'"
+    # retourne le nombre de personnes qui ont le meme nom prenom et classe
+    req_demande_ajout = f"SELECT COUNT(*) " \
+                        f"FROM Identite " \
+                        f"WHERE Nom = '{nom}' AND Prenom = '{prenom}' AND Classe_id = '{classe}'"
     cursor.execute(req_demande_ajout)
     return cursor.fetchone()[0]
 
 
 def liste_classe_eleve():
     # retourne la liste des id des classes sans la classe Or = Professeur
-    req_liste_classe_eleve = "SELECT id, Libelle FROM Classe WHERE id != 'Or'"
+    req_liste_classe_eleve = "SELECT id, Libelle " \
+                             "FROM Classe " \
+                             "WHERE id != 'Or'"
     cursor.execute(req_liste_classe_eleve)
     return cursor.fetchall()
 
 
 def liste_eleve():
     # retourne la liste de tous les eleves
-    req_liste_eleve = "SELECT Casier_id, id, Prenom FROM Identite WHERE Classe_id != 'Or'"
+    req_liste_eleve = "SELECT Casier_id, id, Prenom " \
+                      "FROM Identite " \
+                      "WHERE Classe_id != 'Or'"
+    cursor.execute(req_liste_eleve)
+    return cursor.fetchall()
+
+
+def liste_eleve_avec_casier():
+    # retourne la liste de tous les eleves
+    req_liste_eleve = "SELECT Casier_id, id, Prenom " \
+                      "FROM Identite " \
+                      "WHERE Classe_id != 'Or' AND Casier_id IS NOT NULL"
     cursor.execute(req_liste_eleve)
     return cursor.fetchall()
 
 
 def liste_eleve_par_classe(classe):
     # retourne la liste de tous les eleves d'une classe
-    req_liste_eleve_par_classe = f"SELECT Casier_id, id, prenom  FROM Identite WHERE Classe_id = '{classe}'"
+    req_liste_eleve_par_classe = f"SELECT Casier_id, id, prenom " \
+                                 f"FROM Identite " \
+                                 f"WHERE Classe_id = '{classe}'"
+    cursor.execute(req_liste_eleve_par_classe)
+    return cursor.fetchall()
+
+
+def liste_eleve_avec_casier_par_classe(classe):
+    # retourne la liste de tous les eleves d'une classe
+    req_liste_eleve_par_classe = f"SELECT Casier_id, id, prenom " \
+                                 f"FROM Identite " \
+                                 f"WHERE Classe_id = '{classe}' AND Casier_id IS NOT NULL"
     cursor.execute(req_liste_eleve_par_classe)
     return cursor.fetchall()
 
 
 def liste_casier_libre():
     # retourne liste de casier libre
-    req_liste_casier_libre = "SELECT id FROM Casier WHERE Libre = TRUE"
+    req_liste_casier_libre = "SELECT id " \
+                             "FROM Casier " \
+                             "WHERE Libre = TRUE"
     cursor.execute(req_liste_casier_libre)
     return cursor.fetchall()
 
@@ -205,7 +243,9 @@ def modifier_eleve(id, uid, nom, prenom, classe, casier):
     baseDeDonnees.commit()
 
 
-cursor.execute("SELECT * FROM Identite ORDER BY Nom")
+cursor.execute("SELECT * "
+               "FROM Identite "
+               "ORDER BY Nom")
 rows = cursor.fetchall()
 # print(rows)
 # # print(rows[0][0]) # Tableau dans un tableau le résultat de fetchall

@@ -113,7 +113,7 @@ def verif_casier(casier):
         res = True
         label_Casier_Error.grid_forget()
     elif casier.isdigit():
-        if 1 <= int(casier) <= 2:
+        if 1 <= int(casier) <= 6:
             if demande_casier(casier) > 0:
                 utilisateur = identite_utilsateur_casier(casier)
                 result_casier = mbox.askyesno("Casier occupé", "Le casier selectionné est occupé, \n "

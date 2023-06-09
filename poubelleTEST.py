@@ -20,7 +20,7 @@ def update_list(classe):
     # Effacer les anciens éléments de la liste
     liste.delete(0, tk.END)
     # Obtenir les nouveaux éléments en fonction de la classe sélectionnée
-    elements = liste_eleve_par_classe(classe)
+    elements = liste_eleve_avec_casier_par_classe(classe)
     # Ajouter les nouveaux éléments à la liste
     for element in elements:
         liste.insert(tk.END, element)
@@ -59,7 +59,7 @@ liste.grid(row=1, column=0, rowspan=3, padx=10, pady=10)
 
 # Ajouter des éléments à la liste en fonction de l'option initiale sélectionnée
 classe_initiale = dropdown.get().split(" ")[0]
-elements = liste_eleve()
+elements = liste_eleve_avec_casier()
 for element in elements:
     liste.insert(tk.END, element)
 
