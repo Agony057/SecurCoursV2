@@ -26,7 +26,10 @@ CREATE TABLE Casier(
 	id INT NOT NULL CHECK(id > 0 && id <=2),
 	Ouvert BOOLEAN NOT NULL DEFAULT FALSE,
 	Libre BOOLEAN NOT NULL DEFAULT TRUE,
-	PRIMARY KEY (id)
+	Classe_id VARCHAR(15) NOT NULL,
+	PRIMARY KEY (id),
+    FOREIGN KEY (Classe_id) REFERENCES Classe(id)
+
 );
 -- 
 CREATE TABLE Identite(
@@ -54,15 +57,17 @@ INSERT INTO Classe VALUES ('Bleu', 'Seconde Bac Pro TMA'),
 						('Or', 'Professeur');
 --
 INSERT INTO Identite(NoCarte, Nom, Prenom, Classe_id, Statut, id) VALUES
-							('12.153.12.2', 'BEAUDOUIN', 'Corentin', 'Or', 'ADMIN', 'BEACOR1'),
-							('170.1.62.61', 'MENNINGER', 'Jason', 'Jaune', NULL, 'MENJAS1'),
-							('64.105.61.61', 'ZELL', 'Renaud', 'Vert', NULL, 'ZELREN1'),
-							('4.232.61.61', 'TIJOU', 'Allan', 'Jaune', NULL, 'TIJALA1'),
-							('15.55.62.61', 'VIARDOT', 'Thibault', 'Vert', NULL, 'VIATHI1'),
-							('142.62.61.61', 'AGOZZINO', 'Anthony', 'Bleu', NULL, 'AGOANT1');
+							('12.153.12.2', 'BEAUDOUIN', 'Corentin', 'Or', 'ADMIN', 'BEAUDOUIN1'),
+							('170.1.62.61', 'MENNINGER', 'Jason', 'Jaune', NULL, 'MENNINGER1'),
+							('64.105.61.61', 'ZELL', 'Renaud', 'Vert', NULL, 'ZELL1'),
+							('4.232.61.61', 'TIJOU', 'Allan', 'Jaune', NULL, 'TIJOU1'),
+							('15.55.62.61', 'VIARDOT', 'Thibault', 'Vert', NULL, 'VIARDOT1'),
+							('142.62.61.61', 'AGOZZINO', 'Anthony', 'Bleu', NULL, 'AGOZZINO1');
 -- 
-INSERT INTO Casier(id) VALUES (1),(2);
--- 
+INSERT INTO Casier(id, Classe_id) VALUES (1, 'Vert'), (2, 'Bleu'),
+                                         (3, 'Rouge'), (4, 'Jaune'),
+                                         (5, 'Orange');
+--
 -- -------------------------------------- || 2 select pour verifier les données des 2 tables || ------------------------------
 -- 
 SELECT * FROM Classe ORDER BY Libelle;

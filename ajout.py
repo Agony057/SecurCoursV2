@@ -164,7 +164,7 @@ def verification_Entrer(event):
 
 
 def creation_identifiant(nom, prenom):
-    base_id = nom.upper()
+    base_id = nom[:10].upper()
     chiffre = 1
     identifiant = base_id + str(chiffre)
 
