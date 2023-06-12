@@ -127,7 +127,7 @@ def demande_ajout(nom, prenom, classe):
 
 def liste_classe_eleve():
     # retourne la liste des id des classes sans la classe Or = Professeur
-    req_liste_classe_eleve = "SELECT id, Libelle " \
+    req_liste_classe_eleve = "SELECT id " \
                              "FROM Classe " \
                              "WHERE id != 'Or'"
     cursor.execute(req_liste_classe_eleve)

@@ -213,7 +213,6 @@ def switch_to_second_page():
     button_Retour.grid_forget()
     button_Uid.grid_forget()
     button_Valider.grid_forget()
-    button_suivant.grid_forget()
 
 
     # Création des éléments de la deuxième page

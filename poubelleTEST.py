@@ -5,7 +5,6 @@ from ListClasse import ListClasse
 from PIL import ImageTk, Image
 from bdd import *
 
-
 # Création de la fenêtre principale
 window = tk.Tk()
 
