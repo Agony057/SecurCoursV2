@@ -33,7 +33,7 @@ while continue_reading:
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
 
     if status == MIFAREReader.MI_OK:
-        print ("UID de la carte : "+str(uid[0])+"."+str(uid[1])+"."+str(uid[2])+"."+str(uid[3]))
+        print ("UID de la carte : "+str(uid[0])+"-"+str(uid[1])+"-"+str(uid[2])+"-"+str(uid[3]))
     
         # Clee d authentification par defaut
         key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
