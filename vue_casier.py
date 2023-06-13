@@ -51,11 +51,15 @@ def display_radiobuttons(nom, prenom):
     radio2 = Radiobutton(sous_div2, text="ouvrir casier clé", variable=var, value="ouvrir_casier_cle")
     radio3 = Radiobutton(sous_div2, text="ouvrir casier téléphone", variable=var, value="ouvrir_casier_telephone")
 
-    var.set(None)
+    var.set(var)
 
     radio1.pack(anchor=W)
     radio2.pack(anchor=W)
     radio3.pack(anchor=W)
+
+    button_valider = Button(sous_div2, text="Valider")
+    button_valider.pack(side=BOTTOM)
+
 
 # DropDownMenu
 variable = StringVar(div)

@@ -35,6 +35,17 @@ def update_data():
         my_tree.insert(parent='', index='end', iid=1, values=(4, "martin", "sophie"))
     # Ajoutez des conditions pour les autres classes
 
+def on_tree_select(event):
+    selected_item = my_tree.focus()  # Récupère l'élément sélectionné
+    values = my_tree.item(selected_item, 'values')  # Récupère les valeurs de l'élément sélectionné
+    display_choix_modif(values[1], values[2])  # Affiche les Radiobuttons avec les valeurs nom et prenom
+
+# Fonction pour afficher les Radiobuttons avec les valeurs nom et prenom
+def display_choix_modif(nom, prenom):
+
+    # Créer le Combobox avec les options
+    choix_combobox = ttk.Combobox(sous_div2, values=["Modifier", "Supprimer", "Échanger"])
+    choix_combobox.pack()
 
 
 # DropDownMenu
