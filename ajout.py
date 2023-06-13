@@ -22,7 +22,7 @@ def affichage_uid(id):
 def lecture_uid():
     id = entry_Uid.get()
     print("Scan")
-    # id = lecture() qui doit retourner l'uid (16 chiffres)
+    # id = lecture() qui doit retourner l'uid (Max 16 chiffres)
     if id != "012-3456-789" and id == "987-6543-210":
         id = "0123456789"
     else:
@@ -64,7 +64,7 @@ def verif_uid(uid):
 
     if not res:
         label_Uid_Error.configure(text=error)
-        label_Uid_Error.grid(row=1, columnspan=3)
+        label_Uid_Error.grid(row=1, columnspan=3, pady=10, padx=10)
 
     return res
 
@@ -77,7 +77,7 @@ def verif_nom(nom):
         res = True
         label_Nom_Error.grid_forget()
     else:
-        label_Nom_Error.grid(row=3, columnspan=3)
+        label_Nom_Error.grid(row=3, columnspan=3, pady=10, padx=10)
         label_Nom_Error.configure(text="2 caractères minimum et uniquement des lettres")
     return res
 
@@ -90,7 +90,7 @@ def verif_prenom(prenom):
         res = True
         label_Prenom_Error.grid_forget()
     else:
-        label_Prenom_Error.grid(row=5, columnspan=3)
+        label_Prenom_Error.grid(row=5, columnspan=3, pady=10, padx=10)
         label_Prenom_Error.configure(text="2 caractères minimum et uniquement des lettres")
     return res
 
@@ -102,7 +102,7 @@ def verif_classe(classe):
         res = True
         label_Classe_Error.grid_forget()
     else:
-        label_Classe_Error.grid(row=7, columnspan=3)
+        label_Classe_Error.grid(row=7, columnspan=3, pady=10, padx=10)
         label_Classe_Error.configure(text="Erreur dans le libellé de la classe")
     return res
 
@@ -113,7 +113,7 @@ def verif_casier(casier):
         res = True
         label_Casier_Error.grid_forget()
     elif casier.isdigit():
-        if 1 <= int(casier) <= 2:
+        if 1 <= int(casier) <= 6:
             if demande_casier(casier) > 0:
                 utilisateur = identite_utilsateur_casier(casier)
                 result_casier = mbox.askyesno("Casier occupé", "Le casier selectionné est occupé, \n "
@@ -132,7 +132,7 @@ def verif_casier(casier):
     else:
         error = "numero de casier doit etre un entier !"
     if not res:
-        label_Casier_Error.grid(row=9, columnspan=3)
+        label_Casier_Error.grid(row=9, columnspan=3, pady=10, padx=10)
         label_Casier_Error.configure(text=error)
     return res
 
@@ -164,7 +164,7 @@ def verification_Entrer(event):
 
 
 def creation_identifiant(nom, prenom):
-    base_id = nom.upper()
+    base_id = nom[:10].upper()
     chiffre = 1
     identifiant = base_id + str(chiffre)
 
@@ -196,6 +196,44 @@ def validation(uid, nom, prenom, classe, casier):
             identifiant = creation_identifiant(nom, prenom)
             ajout(uid, identifiant, nom, prenom, classe, casier)
 
+def switch_to_second_page():
+    # Destruction des éléments de la première page
+    label_NoCarte.grid_forget()
+    label_Nom.grid_forget()
+    label_Prenom.grid_forget()
+    label_Classe.grid_forget()
+    label_NoCasier.grid_forget()
+
+    entry_Uid.grid_forget()
+    entryNom.grid_forget()
+    entryPrenom.grid_forget()
+    entryClasse.grid_forget()
+    entryNoCasier.grid_forget()
+
+    button_Retour.grid_forget()
+    button_Uid.grid_forget()
+    button_Valider.grid_forget()
+
+
+    # Création des éléments de la deuxième page
+    label2 = tk.Label(window, text="Deuxième page")
+    label2.grid(row=55, columnspan=3)
+    label_NoCarte.grid(row=56, column=0)
+    label_Nom.grid(row=57, column=0)
+    label_Prenom.grid(row=58, column=0)
+    label_Classe.grid(row=59, column=0)
+    label_NoCasier.grid(row=60, column=0)
+
+    entry_Uid.grid(row=56, column=1)
+    entryNom.grid(row=57, column=1)
+    entryPrenom.grid(row=58, column=1)
+    entryClasse.grid(row=59, column=1)
+    entryNoCasier.grid(row=60, column=1)
+
+    button_Uid.grid(row=56, column=2)
+    button_Valider.grid(row=61, columnspan=3)
+    button_Retour.grid(row=62, columnspan=3)
+
 
 window = tk.Tk()
 
@@ -215,7 +253,7 @@ canvas.create_image(0, 0, image=photo, anchor=tk.NW)
 # canvas.grid(row=0, column=0, rowspan=12, columnspan=4)
 
 # Creation d'une police plus grande
-grandePolice = font.Font(size=30)
+grandePolice = font.Font(size=25)
 # Configuration de la nouvelle police pour tous les widgets de la fenêtre
 window.option_add("*Font", grandePolice)
 
@@ -245,42 +283,47 @@ label_Nom_Error = tk.Label(window, foreground="red")
 
 # Prenom
 label_Prenom = tk.Label(window, text="Prenom :")
-label_Prenom.grid(row=4, column=0)
+label_Prenom.grid(row=4, column=0, pady=10, padx=10)
 
 entryPrenom = tk.Entry(window)
 entryPrenom.bind("<Return>", verification_Entrer)
-entryPrenom.grid(row=4, column=1)
+entryPrenom.grid(row=4, column=1, pady=10, padx=10)
 
 label_Prenom_Error = tk.Label(window, foreground="red")
 
 # Classe
 label_Classe = tk.Label(window, text="Classe :")
-label_Classe.grid(row=6, column=0)
+label_Classe.grid(row=6, column=0, pady=10, padx=10)
 
 entryClasse = tk.Entry(window)
 entryClasse.bind("<Return>", verification_Entrer)
-entryClasse.grid(row=6, column=1)
+entryClasse.grid(row=6, column=1, pady=10, padx=10)
 
 label_Classe_Error = tk.Label(window, foreground="red")
 
 # Casier
 label_NoCasier = tk.Label(window, text="N° Casier :")
-label_NoCasier.grid(row=8, column=0)
+label_NoCasier.grid(row=8, column=0, pady=10, padx=10)
 
 entryNoCasier = tk.Entry(window)
 entryNoCasier.bind("<Return>", verification_Entrer)
-entryNoCasier.grid(row=8, column=1)
+entryNoCasier.grid(row=8, column=1, pady=10, padx=10)
 
 label_Casier_Error = tk.Label(window, foreground="red")
 
 # Valider
 button_Valider = tk.Button(window, text="Valider", command=verification,
                            background="lightgreen", cursor="hand2", width=7)
-button_Valider.grid(row=10, columnspan=3)
+button_Valider.grid(row=10, columnspan=3, pady=10, padx=10)
 
 # Retour
 button_Retour = tk.Button(window, text="Annuler", command=retour,
                           background="orange", cursor="hand2", width=7)
-button_Retour.grid(row=11, columnspan=3)
+button_Retour.grid(row=11, columnspan=3, pady=10, padx=10)
+
+# Suivant
+button_suivant = tk.Button(window, text="Suivant", command=switch_to_second_page,
+                          background="orange", cursor="hand2", width=7)
+button_suivant.grid(row=12, columnspan=3, pady=10, padx=10)
 
 window.mainloop()
