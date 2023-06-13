@@ -8,23 +8,26 @@ fenetre = Tk()
 # Fonction de mise à jour des données de la liste de gauche en fonction de la classe sélectionnée
 def update_data():
     # recupération du nom de la classe
-    classe = nom_classe.get()
+    classe = nom_classe.get().replace("{", "").replace("}", "")
 
-    # recuperation de liste d'eleve de la classe du dropdown
-    eleves = liste_eleve_avec_casier_par_classe(classe)
+    if classe == "Toutes_les_classes":
+        eleves = liste_eleve_avec_casier()
+    else:
+        # recuperation de liste d'eleve de la classe du dropdown
+        eleves = liste_eleve_avec_casier_par_classe(classe)
 
     # on efface la liste pré-existante
     my_tree.delete(*my_tree.get_children())
 
-    # on insere les eleves un par un dans la liste
+    # on insère les eleves un par un dans la liste
     for eleve in eleves:
-        my_tree.insert(parent='', index='end',values=(eleve[0],eleve[1] ,eleve[2]))
+        my_tree.insert(parent='', index='end',values=(eleve[0], eleve[1], eleve[2]))
 
 # Fonction appelée lorsque vous sélectionnez un élément de la liste de gauche
 def on_tree_select(event):
     selected_item = my_tree.focus()  # Récupère l'élément sélectionné
     values = my_tree.item(selected_item, 'values')  # Récupère les valeurs de l'élément sélectionné
-    display_radiobuttons(values[1], values[2])  # Affiche les Radiobuttons avec les valeurs nom et prenom
+
 
 # Fonction pour afficher les Radiobuttons avec les valeurs nom et prenom
 def display_radiobuttons(nom, prenom):
@@ -46,6 +49,8 @@ def page_casier():
 def construction_page_casier():
     forget_all()
     page_casier()
+    select_classes.current(4)
+    update_data()
 
 
 def forget_all():
@@ -126,7 +131,7 @@ radio3.pack(anchor=W)
 
 # DropDownMenu
 nom_classe = StringVar(div)
-nom_classe.set("Sélectionner une classe")  # Valeur par défaut
+# nom_classe.set("")  # Valeur par défaut
 
 options = liste_classe_eleve()
 
