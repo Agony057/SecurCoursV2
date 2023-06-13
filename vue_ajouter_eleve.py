@@ -8,6 +8,8 @@ div = Frame(fenetre)
 div.pack(padx=20,pady=10)  # Ajout du padding à gauche et à droite de 20 pixels
 div2 = Frame(fenetre)
 div2.pack(pady=25)
+div3 = Frame(fenetre)
+div3.pack(pady=10)
 
 sous_div1 = Frame(div2, height=200)
 sous_div1.grid(row=0, column=0, sticky="nsew")
@@ -31,34 +33,9 @@ def update_data():
         # Insère de nouvelles données
         my_tree.insert(parent='', index='end', iid=0, values=(3, "dupont", "pierre"))
         my_tree.insert(parent='', index='end', iid=1, values=(4, "martin", "sophie"))
+
     # Ajoutez des conditions pour les autres classes
 
-# Fonction appelée lorsque vous sélectionnez un élément de la liste de gauche
-def on_tree_select(event):
-    selected_item = my_tree.focus()  # Récupère l'élément sélectionné
-    values = my_tree.item(selected_item, 'values')  # Récupère les valeurs de l'élément sélectionné
-    display_radiobuttons(values[1], values[2])  # Affiche les Radiobuttons avec les valeurs nom et prenom
-
-# Fonction pour afficher les Radiobuttons avec les valeurs nom et prenom
-def display_radiobuttons(nom, prenom):
-    # Efface les anciens Radiobuttons
-    for widget in sous_div2.winfo_children():
-        widget.destroy()
-
-    # Crée les nouveaux Radiobuttons
-    var = StringVar()
-    radio1 = Radiobutton(sous_div2, text="a oublié son badge", variable=var, value="a_oublie_son_badge")
-    radio2 = Radiobutton(sous_div2, text="ouvrir casier clé", variable=var, value="ouvrir_casier_cle")
-    radio3 = Radiobutton(sous_div2, text="ouvrir casier téléphone", variable=var, value="ouvrir_casier_telephone")
-
-    var.set(var)
-
-    radio1.pack(anchor=W)
-    radio2.pack(anchor=W)
-    radio3.pack(anchor=W)
-
-    button_valider = Button(sous_div2, text="Valider")
-    button_valider.pack(side=BOTTOM)
 
 
 # DropDownMenu
@@ -90,6 +67,56 @@ blank_label.pack(side=LEFT)
 # BtnQuitter
 button2 = Button(div, text="Quitter")
 button2.pack(side=LEFT)
+#GRID
+
+# BtnAjouter
+btnAdd = Button(div3, text="Valider")
+btnAdd.grid(row=0, column=0)
+
+# ScanBadge
+btnScan = Button(div3, text="Scan Badge")
+btnScan.grid(row=0, column=1)
+
+#entry + lbl nom
+lblNom = Label(div3, text="Nom:")
+lblNom.grid(row=0, column=3)
+
+entryNom = Entry(div3)
+entryNom.grid(row=0, column=4)
+
+#entry + lbl prenom
+lblPrenom = Label(div3, text="Prenom:")
+lblPrenom.grid(row=0, column=5)
+
+entryPrenom = Entry(div3)
+entryPrenom.grid(row=0, column=6)
+
+#entry + lbl NCasier
+lblNCasier = Label(div3, text="N° Casier:")
+lblNCasier.grid(row=0, column=7)
+
+entryNCasier = Entry(div3)
+entryNCasier.grid(row=0, column=8)
+
+# DropDownMenu
+variable_new_eleve_class = StringVar(div3)
+variable_new_eleve_class.set("Sélectionner une classe")  # Valeur par défaut
+
+options_new_eleve_class = ["Sélectionner une classe", "2AMA Seconde Bac Pro TMA", "1TMA Première Bac Pro TMA", "1MEN 1ère CAP MF", "TMEN Terminale CAP MF"]
+new_eleve_class = ttk.Combobox(div3, textvariable=variable_new_eleve_class, values=options_new_eleve_class, width=20)
+new_eleve_class.grid(row=0, column=9)
+
+# BtnAnnuler
+btnAnnuler = Button(div3, text="Annuler")
+btnAnnuler.grid(row=1, column=0)
+
+#entry + lbl IUD
+lblIUD = Label(div3, text="IUD:")
+lblIUD.grid(row=1, column=1)
+
+entryIUD = Entry(div3)
+entryIUD.grid(row=1, column=2)
+
 
 # Liste de gauche
 my_tree = ttk.Treeview(sous_div1)
@@ -101,7 +128,7 @@ my_tree.column("prenom", anchor=W, width=150)
 my_tree.heading("Id", text="Id")
 my_tree.heading("nom", text="Nom")
 my_tree.heading("prenom", text="Prenom")
-my_tree.bind("<<TreeviewSelect>>", on_tree_select)  # Appelle la fonction lorsqu'un élément est sélectionné
+
 my_tree.pack(side=LEFT)
 
 fenetre.mainloop()
