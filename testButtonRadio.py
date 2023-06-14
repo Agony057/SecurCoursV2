@@ -135,7 +135,7 @@ nom_classe = StringVar(div)
 
 options = liste_classe_eleve()
 
-select_classes = ttk.Combobox(div, textvariable=nom_classe, values=options)
+select_classes = ttk.Combobox(div, textvariable=nom_classe, values=options, state="readonly")
 select_classes.pack(side=LEFT)
 select_classes.bind("<<ComboboxSelected>>", on_class_select)
 
