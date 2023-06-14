@@ -44,6 +44,8 @@ def page_casier():
 def construction_page_casier():
     forget_all()
     page_casier()
+    select_classes.current(4)
+    update_data()
 
 
 def forget_all():
@@ -140,7 +142,7 @@ nom_classe = StringVar(div_vue_casier)
 
 options = liste_classe_eleve()
 
-select_classes = ttk.Combobox(div_vue_casier, textvariable=nom_classe, values=options)
+select_classes = ttk.Combobox(div_vue_casier, textvariable=nom_classe, values=options, state="readonly")
 select_classes.pack(side=LEFT)
 select_classes.bind("<<ComboboxSelected>>", on_class_select)
 
