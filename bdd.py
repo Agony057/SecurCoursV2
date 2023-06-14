@@ -245,6 +245,40 @@ def modifier_eleve(id, uid, nom, prenom, classe, casier):
     baseDeDonnees.commit()
 
 
+#requête qui permet de récupérer un numéro de casier grâce à l'uid
+def obtenir_no_casier(uid):
+    req_obtenir_no_casier = "SELECT Casier_id " \
+                            "FROM Identite " \
+                            f"WHERE uid = '{uid}'"
+
+    cursor.execute(req_obtenir_no_casier)
+
+    # commit obligatoire pour mise à jour  la base donnée
+    baseDeDonnees.commit()
+
+
+#supprimer un élève
+def supprimer_eleve(id):
+    req_supprimer_eleve = "DELETE FROM Identite " \
+                          f"WHERE id = '{id}'"
+
+    cursor.execute(req_supprimer_eleve)
+
+    # commit obligatoire pour mise à jour  la base donnée
+    baseDeDonnees.commit()
+
+
+#supprimer une classe
+def supprimer_classe(classe_id):
+    req_supprimer_classe = "DELETE FROM Identite " \
+                           f"WHERE Classe_id = '{classe_id}' "
+
+    cursor.execute(req_supprimer_classe)
+
+    # commit obligatoire pour mise à jour  la base donnée
+    baseDeDonnees.commit()
+
+
 cursor.execute("SELECT * "
                "FROM Identite "
                "ORDER BY Nom")
