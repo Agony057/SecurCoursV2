@@ -1,3 +1,4 @@
+
 from tkinter import *
 from tkinter import ttk
 
@@ -35,28 +36,42 @@ def update_data():
         my_tree.insert(parent='', index='end', iid=1, values=(4, "martin", "sophie"))
     # Ajoutez des conditions pour les autres classes
 
+# Fonction appelée lorsque vous sélectionnez un élément de la liste de gauche
 def on_tree_select(event):
     selected_item = my_tree.focus()  # Récupère l'élément sélectionné
     values = my_tree.item(selected_item, 'values')  # Récupère les valeurs de l'élément sélectionné
-    display_choix_modif(values[1], values[2])  # Affiche les Radiobuttons avec les valeurs nom et prenom
+    display_options_modif()
 
-# Fonction pour afficher les Radiobuttons avec les valeurs nom et prenom
-def display_choix_modif(nom, prenom):
 
-    # Créer le Combobox avec les options
-    choix_combobox = ttk.Combobox(sous_div2, values=["Modifier", "Supprimer", "Échanger"])
-    choix_combobox.pack()
+def display_options_modif():
+    # Efface l ancien DropDownMenu
+    for widget in sous_div2.winfo_children():
+        widget.destroy()
+
+    # Crée le nouveau DropDownMenu
+    variable_modif = StringVar(sous_div2)
+    variable_modif.set("Modifier")  # Valeur par défaut
+
+    options_modif = ["Modifier", "Supprimer", "Echanger"]
+    select_modif = ttk.Combobox(sous_div2, textvariable=variable_modif, values=options_modif, width=30)
+    select_modif.pack(side=LEFT)
+
+    # BtnValider
+    BtnValider = Button(sous_div2, text="Valider")
+    BtnValider.pack(side=LEFT)
+
 
 
 # DropDownMenu
 variable = StringVar(div)
 variable.set("Sélectionner une classe")  # Valeur par défaut
 
-options = ["Sélectionner une classe", "2AMA Seconde Bac Pro TMA", "1TMA Première Bac Pro TMA", "1MEN 1ère CAP MF", "TMEN Terminale CAP MF"]
+options = [ "2AMA Seconde Bac Pro TMA", "1TMA Première Bac Pro TMA", "1MEN 1ère CAP MF", "TMEN Terminale CAP MF"]
 
 # Fonction de mise à jour des données de la liste de gauche lors du changement de classe sélectionnée
 def on_class_select(*args):
     update_data()
+
 
 select_classes = ttk.Combobox(div, textvariable=variable, values=options,width=30)
 select_classes.pack(side=LEFT)
@@ -92,7 +107,7 @@ my_tree.column("prenom", anchor=W, width=150)
 my_tree.heading("Id", text="Id")
 my_tree.heading("nom", text="Nom")
 my_tree.heading("prenom", text="Prenom")
-
+my_tree.bind("<<TreeviewSelect>>", on_tree_select)  # Appelle la fonction lorsqu'un élément est sélectionné
 my_tree.pack(side=LEFT)
 
 fenetre.mainloop()
