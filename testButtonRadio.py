@@ -29,21 +29,16 @@ def on_tree_select(event):
     values = my_tree.item(selected_item, 'values')  # Récupère les valeurs de l'élément sélectionné
 
 
-# Fonction pour afficher les Radiobuttons avec les valeurs nom et prenom
-def display_radiobuttons(nom, prenom):
-    # Efface les anciens Radiobuttons
-    for widget in sous_div2.winfo_children():
-        widget.destroy()
-
-
 # Fonction de mise à jour des données de la liste de gauche lors du changement de classe sélectionnée
 def on_class_select(*args):
     update_data()
 
 
 def page_casier():
-    div.pack(padx=20)
-    div2.pack()
+    div_vue_casier.pack(padx=20)
+    div_vue_casier2.pack()
+    select_classes.current(4)
+    update_data()
 
 
 def construction_page_casier():
@@ -60,16 +55,29 @@ def forget_all():
 
 
 def forget_page_casier():
-    div.pack_forget()
-    div2.pack_forget()
+    div_vue_casier.pack_forget()
+    div_vue_casier2.pack_forget()
+
 
 def forget_page_eleve():
-    print("effacerpagecasier")
+    div_vue_eleve.pack_forget()
+    div_vue_eleve2.pack_forget()
+    div_vue_eleve3.pack_forget()
 
+
+def construction_page_eleve():
+    forget_all()
+    page_eleve()
+
+
+def page_eleve():
+    div_vue_eleve.pack(padx=20, pady=10)  # Ajout du padding à gauche et à droite de 20 pixels
+    div_vue_eleve2.pack(pady=25)
+    div_vue_eleve3.pack(pady=10)
 
 
 def forget_page_accueil():
-    label.pack_forget()
+    label_principal.pack_forget()
     testbouton.pack_forget()
 
 
@@ -79,7 +87,7 @@ def construction_accueil():
 
 
 def accueil():
-    label.pack(pady=20, padx=20)
+    label_principal.pack(pady=20, padx=20)
     testbouton.pack()
 
 
@@ -92,11 +100,11 @@ def retour_accueil():
 # Badge
 #################################################################################################
 
-label = Label(fenetre, text="Veuillez passez votre badge")
-label.pack(pady=20, padx=20)
-# label.pack()
+label_principal = Label(fenetre, text="Veuillez passez votre badge")
+label_principal.pack(pady=20, padx=20)
+# label_principal.pack()
 # fenetre.geometry("800*600")
-# label.place(relx=0.5, rely=0.5, anchor=CENTER)
+# label_principale.place(relx=0.5, rely=0.5, anchor=CENTER)
 testbouton = Button(fenetre, text="testbouton", command=construction_page_casier)
 testbouton.pack()
 
@@ -106,57 +114,56 @@ testbouton.pack()
 # Casier
 #################################################################################################
 
-div = Frame(fenetre)
-div.pack(padx=20)  # Ajout du padding à gauche et à droite de 20 pixels
-div2 = Frame(fenetre)
-div2.pack()
+div_vue_casier = Frame(fenetre)
+div_vue_casier.pack(padx=20)  # Ajout du padding à gauche et à droite de 20 pixels
+div_vue_casier2 = Frame(fenetre)
+div_vue_casier2.pack()
 
-sous_div1 = Frame(div2, height=200)
-sous_div1.grid(row=0, column=0, sticky="nsew")
+sous_div_vue_casier1 = Frame(div_vue_casier2, height=200)
+sous_div_vue_casier1.grid(row=0, column=0, sticky="nsew")
 
-sous_div2 = Frame(div2)
-sous_div2.grid(row=0, column=1, sticky="nsew")
+sous_div_vue_casier2 = Frame(div_vue_casier2)
+sous_div_vue_casier2.grid(row=0, column=1, sticky="nsew")
 
 # Crée les nouveaux Radiobuttons
-var = StringVar()
-radio1 = Radiobutton(sous_div2, text="a oublié son badge", variable=var, value="a_oublie_son_badge")
-radio2 = Radiobutton(sous_div2, text="ouvrir casier clé", variable=var, value="ouvrir_casier_cle")
-radio3 = Radiobutton(sous_div2, text="ouvrir casier téléphone", variable=var, value="ouvrir_casier_telephone")
+choix_radio_casier = StringVar()
+radio_casier1 = Radiobutton(sous_div_vue_casier2, text="a oublié son badge", variable=choix_radio_casier, value="a_oublie_son_badge")
+radio_casier2 = Radiobutton(sous_div_vue_casier2, text="ouvrir casier clé", variable=choix_radio_casier, value="ouvrir_casier_cle")
+radio_casier3 = Radiobutton(sous_div_vue_casier2, text="ouvrir casier téléphone", variable=choix_radio_casier, value="ouvrir_casier_telephone")
 
-var.set(None)
+choix_radio_casier.set('a_oublie_son_badge')
 
-radio1.pack(anchor=W)
-radio2.pack(anchor=W)
-radio3.pack(anchor=W)
+radio_casier1.pack(anchor=W)
+radio_casier2.pack(anchor=W)
+radio_casier3.pack(anchor=W)
 
 # DropDownMenu
-nom_classe = StringVar(div)
-# nom_classe.set("")  # Valeur par défaut
+nom_classe = StringVar(div_vue_casier)
 
 options = liste_classe_eleve()
 
-select_classes = ttk.Combobox(div, textvariable=nom_classe, values=options, state="readonly")
+select_classes = ttk.Combobox(div_vue_casier, textvariable=nom_classe, values=options, state="readonly")
 select_classes.pack(side=LEFT)
 select_classes.bind("<<ComboboxSelected>>", on_class_select)
 
 # BLANK
-blank_label = Label(div, width=50)
+blank_label = Label(div_vue_casier, width=50)
 blank_label.pack(side=LEFT)
 
 # BtnEleve
-button1 = Button(div, text="Elèves")
-button1.pack(side=LEFT)
+button_vers_page_eleve = Button(div_vue_casier, text="Elèves", command=construction_page_eleve())
+button_vers_page_eleve.pack(side=LEFT)
 
 # BLANK
-blank_label = Label(div, width=10)
+blank_label = Label(div_vue_casier, width=10)
 blank_label.pack(side=LEFT)
 
 # BtnAccueil
-button2 = Button(div, text="Accueil", command=retour_accueil)
-button2.pack(side=LEFT)
+button_vers_accueil_depuis = Button(div_vue_casier, text="Accueil", command=retour_accueil)
+button_vers_accueil_depuis.pack(side=LEFT)
 
 # Liste de gauche
-my_tree = ttk.Treeview(sous_div1)
+my_tree = ttk.Treeview(sous_div_vue_casier1)
 my_tree['columns'] = ("Id", "nom", "prenom")
 my_tree.column("#0", width=0, stretch=NO)
 my_tree.column("Id", anchor=W, width=80)
@@ -174,8 +181,106 @@ my_tree.pack(side=LEFT)
 # Eleve
 #################################################################################################
 
+div_vue_eleve = Frame(fenetre)
+div_vue_eleve.pack(padx=20, pady=10)  # Ajout du padding à gauche et à droite de 20 pixels
+div_vue_eleve2 = Frame(fenetre)
+div_vue_eleve2.pack(pady=25)
+div_vue_eleve3 = Frame(fenetre)
+div_vue_eleve3.pack(pady=10)
+
+sous_div_vue_eleve1 = Frame(div_vue_eleve2, height=200)
+sous_div_vue_eleve1.grid(row=0, column=0, sticky="nsew")
+
+sous_div_vue_eleve2 = Frame(div_vue_eleve2)
+sous_div_vue_eleve2.grid(row=0, column=1, sticky="nsew", pady=25)
+
+# DropDownMenu
+variable = StringVar(div_vue_eleve)
+
+options = liste_classe_eleve()
+
+select_classes = ttk.Combobox(div_vue_eleve, textvariable=variable, values=options, width=30)
+select_classes.pack(side=LEFT)
+select_classes.bind("<<ComboboxSelected>>", on_class_select)
+
+# BLANK
+blank_label = Label(div_vue_eleve, width=50)
+blank_label.pack(side=LEFT)
+
+# BtnEleve
+button1 = Button(div_vue_eleve, text="Elèves")
+button1.pack(side=LEFT)
+
+# BLANK
+blank_label = Label(div_vue_eleve, width=10)
+blank_label.pack(side=LEFT)
+
+# BtnQuitter
+button2 = Button(div_vue_eleve, text="Quitter")
+button2.pack(side=LEFT)
+#GRID
+
+# BtnAjouter
+btnAdd = Button(div_vue_eleve3, text="Valider")
+btnAdd.grid(row=0, column=0)
+
+# ScanBadge
+btnScan = Button(div_vue_eleve3, text="Scan Badge")
+btnScan.grid(row=0, column=1)
+
+#entry + lbl nom
+lblNom = Label(div_vue_eleve3, text="Nom:")
+lblNom.grid(row=0, column=3)
+
+entryNom = Entry(div_vue_eleve3)
+entryNom.grid(row=0, column=4)
+
+#entry + lbl prenom
+lblPrenom = Label(div_vue_eleve3, text="Prenom:")
+lblPrenom.grid(row=0, column=5)
+
+entryPrenom = Entry(div_vue_eleve3)
+entryPrenom.grid(row=0, column=6)
+
+#entry + lbl NCasier
+lblNCasier = Label(div_vue_eleve3, text="N° Casier:")
+lblNCasier.grid(row=0, column=7)
+
+entryNCasier = Entry(div_vue_eleve3)
+entryNCasier.grid(row=0, column=8)
+
+# DropDownMenu
+variable_new_eleve_class = StringVar(div_vue_eleve3)
+variable_new_eleve_class.set("Sélectionner une classe")  # Valeur par défaut
+
+options_new_eleve_class = liste_classe_eleve()
+new_eleve_class = ttk.Combobox(div_vue_eleve3, textvariable=variable_new_eleve_class, values=options_new_eleve_class, width=20)
+new_eleve_class.grid(row=0, column=9)
+
+# BtnAnnuler
+btnAnnuler = Button(div_vue_eleve3, text="Annuler")
+btnAnnuler.grid(row=1, column=0)
+
+#entry + lbl IUD
+lblUID = Label(div_vue_eleve3, text="UID:")
+lblUID.grid(row=1, column=1)
+
+entryUID = Entry(div_vue_eleve3)
+entryUID.grid(row=1, column=2)
 
 
+# Liste de gauche
+my_tree = ttk.Treeview(sous_div_vue_eleve1)
+my_tree['columns'] = ("Id", "nom", "prenom")
+my_tree.column("#0", width=0, stretch=NO)
+my_tree.column("Id", anchor=W, width=80)
+my_tree.column("nom", anchor=W, width=150)
+my_tree.column("prenom", anchor=W, width=150)
+my_tree.heading("Id", text="Id")
+my_tree.heading("nom", text="Nom")
+my_tree.heading("prenom", text="Prenom")
+
+my_tree.pack(side=LEFT)
 
 #################################################################################################
 
