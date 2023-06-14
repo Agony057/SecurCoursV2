@@ -17,7 +17,7 @@ sous_div2.grid(row=0, column=1, sticky="nsew",pady=25)
 
 # Fonction de mise à jour des données de la liste de gauche en fonction de la classe sélectionnée
 def update_data():
-    selected_class = variable.get()
+    selected_class = valeur_defaut_combobox_casier.get()
     # Mettez à jour les données de la liste de gauche en fonction de la classe sélectionnée
     if selected_class == "2AMA Seconde Bac Pro TMA":
         # Efface les anciennes données
@@ -46,32 +46,32 @@ def display_radiobuttons(nom, prenom):
         widget.destroy()
 
     # Crée les nouveaux Radiobuttons
-    var = StringVar()
-    radio1 = Radiobutton(sous_div2, text="a oublié son badge", variable=var, value="a_oublie_son_badge")
-    radio2 = Radiobutton(sous_div2, text="ouvrir casier clé", variable=var, value="ouvrir_casier_cle")
-    radio3 = Radiobutton(sous_div2, text="ouvrir casier téléphone", variable=var, value="ouvrir_casier_telephone")
+    choix_radio_btn_casier = StringVar()
+    btn_radio_oublie_badge = Radiobutton(sous_div2, text="a oublié son badge", variable=choix_radio_btn_casier, value="a_oublie_son_badge")
+    btn_radio_oublie_cle = Radiobutton(sous_div2, text="ouvrir casier clé", variable=choix_radio_btn_casier, value="ouvrir_casier_cle")
+    btn_radio_oublie_telephone = Radiobutton(sous_div2, text="ouvrir casier téléphone", variable=choix_radio_btn_casier, value="ouvrir_casier_telephone")
 
-    var.set(var)
+    choix_radio_btn_casier.set(choix_radio_btn_casier)
 
-    radio1.pack(anchor=W)
-    radio2.pack(anchor=W)
-    radio3.pack(anchor=W)
+    btn_radio_oublie_badge.pack(anchor=W)
+    btn_radio_oublie_cle.pack(anchor=W)
+    btn_radio_oublie_telephone.pack(anchor=W)
 
     button_valider = Button(sous_div2, text="Valider")
     button_valider.pack(side=BOTTOM)
 
 
 # DropDownMenu
-variable = StringVar(div)
-variable.set("Sélectionner une classe")  # Valeur par défaut
+valeur_defaut_combobox_casier = StringVar(div)
+valeur_defaut_combobox_casier.set("Sélectionner une classe")  # Valeur par défaut
 
-options = ["Sélectionner une classe", "2AMA Seconde Bac Pro TMA", "1TMA Première Bac Pro TMA", "1MEN 1ère CAP MF", "TMEN Terminale CAP MF"]
+liste_valeur_combobox_casier = ["Sélectionner une classe", "2AMA Seconde Bac Pro TMA", "1TMA Première Bac Pro TMA", "1MEN 1ère CAP MF", "TMEN Terminale CAP MF"]
 
 # Fonction de mise à jour des données de la liste de gauche lors du changement de classe sélectionnée
 def on_class_select(*args):
     update_data()
 
-select_classes = ttk.Combobox(div, textvariable=variable, values=options,width=30)
+select_classes = ttk.Combobox(div, textvariable=valeur_defaut_combobox_casier, values=liste_valeur_combobox_casier, width=30)
 select_classes.pack(side=LEFT)
 select_classes.bind("<<ComboboxSelected>>", on_class_select)
 
@@ -80,16 +80,16 @@ blank_label = Label(div, width=50)
 blank_label.pack(side=LEFT)
 
 # BtnEleve
-button1 = Button(div, text="Elèves")
-button1.pack(side=LEFT)
+btn_eleve = Button(div, text="Gestion elèves")
+btn_eleve.pack(side=LEFT)
 
 # BLANK
 blank_label = Label(div, width=10)
 blank_label.pack(side=LEFT)
 
 # BtnQuitter
-button2 = Button(div, text="Quitter")
-button2.pack(side=LEFT)
+btn_accueil_casier = Button(div, text="Accueil")
+btn_accueil_casier.pack(side=LEFT)
 
 # Liste de gauche
 my_tree = ttk.Treeview(sous_div1)
