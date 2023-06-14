@@ -21,22 +21,22 @@ def update_data():
     # Mettez à jour les données de la liste de gauche en fonction de la classe sélectionnée
     if selected_class == "2AMA Seconde Bac Pro TMA":
         # Efface les anciennes données
-        my_tree.delete(*my_tree.get_children())
+        my_tree_casier.delete(*my_tree_casier.get_children())
         # Insère de nouvelles données
-        my_tree.insert(parent='', index='end', iid=0, values=(1, "tijou", "allan"))
-        my_tree.insert(parent='', index='end', iid=1, values=(2, "viardot", "tibo"))
+        my_tree_casier.insert(parent='', index='end', iid=0, values=(1, "tijou", "allan"))
+        my_tree_casier.insert(parent='', index='end', iid=1, values=(2, "viardot", "tibo"))
     elif selected_class == "1TMA Première Bac Pro TMA":
         # Efface les anciennes données
-        my_tree.delete(*my_tree.get_children())
+        my_tree_casier.delete(*my_tree_casier.get_children())
         # Insère de nouvelles données
-        my_tree.insert(parent='', index='end', iid=0, values=(3, "dupont", "pierre"))
-        my_tree.insert(parent='', index='end', iid=1, values=(4, "martin", "sophie"))
+        my_tree_casier.insert(parent='', index='end', iid=0, values=(3, "dupont", "pierre"))
+        my_tree_casier.insert(parent='', index='end', iid=1, values=(4, "martin", "sophie"))
     # Ajoutez des conditions pour les autres classes
 
 # Fonction appelée lorsque vous sélectionnez un élément de la liste de gauche
 def on_tree_select(event):
-    selected_item = my_tree.focus()  # Récupère l'élément sélectionné
-    values = my_tree.item(selected_item, 'values')  # Récupère les valeurs de l'élément sélectionné
+    selected_item = my_tree_casier.focus()  # Récupère l'élément sélectionné
+    values = my_tree_casier.item(selected_item, 'values')  # Récupère les valeurs de l'élément sélectionné
     display_radiobuttons(values[1], values[2])  # Affiche les Radiobuttons avec les valeurs nom et prenom
 
 # Fonction pour afficher les Radiobuttons avec les valeurs nom et prenom
@@ -92,16 +92,16 @@ btn_accueil_casier = Button(div, text="Accueil")
 btn_accueil_casier.pack(side=LEFT)
 
 # Liste de gauche
-my_tree = ttk.Treeview(sous_div1)
-my_tree['columns'] = ("Id", "nom", "prenom")
-my_tree.column("#0", width=0, stretch=NO)
-my_tree.column("Id", anchor=W, width=80)
-my_tree.column("nom", anchor=W, width=150)
-my_tree.column("prenom", anchor=W, width=150)
-my_tree.heading("Id", text="Id")
-my_tree.heading("nom", text="Nom")
-my_tree.heading("prenom", text="Prenom")
-my_tree.bind("<<TreeviewSelect>>", on_tree_select)  # Appelle la fonction lorsqu'un élément est sélectionné
-my_tree.pack(side=LEFT)
+my_tree_casier = ttk.Treeview(sous_div1)
+my_tree_casier['columns'] = ("Id", "nom", "prenom")
+my_tree_casier.column("#0", width=0, stretch=NO)
+my_tree_casier.column("Id", anchor=W, width=80)
+my_tree_casier.column("nom", anchor=W, width=150)
+my_tree_casier.column("prenom", anchor=W, width=150)
+my_tree_casier.heading("Id", text="Id")
+my_tree_casier.heading("nom", text="Nom")
+my_tree_casier.heading("prenom", text="Prenom")
+my_tree_casier.bind("<<TreeviewSelect>>", on_tree_select)  # Appelle la fonction lorsqu'un élément est sélectionné
+my_tree_casier.pack(side=LEFT)
 
 fenetre.mainloop()

@@ -131,8 +131,18 @@ def liste_classe_eleve():
     # retourne la liste des id des classes sans la classe Or = Professeur
     req_liste_classe_eleve = "SELECT id " \
                              "FROM Classe " \
-                             "WHERE id != 'Or'"
+                             "WHERE id != 'Or' "
+
     cursor.execute(req_liste_classe_eleve)
+    return cursor.fetchall()
+
+
+def liste_classe_eleve_reel():
+    req_liste_classe_eleve_reel = "SELECT id " \
+                                 "FROM Classe " \
+                                 "WHERE id != 'Or' "\
+                                 "AND id != 'Toutes_les_classe' "
+    cursor.execute(req_liste_classe_eleve_reel)
     return cursor.fetchall()
 
 
