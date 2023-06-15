@@ -273,6 +273,17 @@ def modifier_eleve(id, uid, nom, prenom, classe, casier):
     baseDeDonnees.commit()
 
 
+def obtenir_info_avec_id(id):
+    req_obtenir_info_avec_id =  "SELECT Nom, Prenom, NoCarte, Classe_id, Casier_id " \
+                                "FROM Identite" \
+                                f"WHERE id = '{id}'"
+
+    cursor.execute(req_obtenir_info_avec_id)
+    # commit obligatoire pour mise à jour de la base donnée
+    baseDeDonnees.commit()
+
+
+
 #requête qui permet de récupérer un numéro de casier grâce à l'uid
 def obtenir_no_casier(uid):
     req_obtenir_no_casier = "SELECT Casier_id " \
