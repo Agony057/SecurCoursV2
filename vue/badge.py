@@ -12,3 +12,5 @@ def accueil():
     label_accueil.place(relx=0.5, rely=0.5, anchor=CENTER)
 
     fenetre.mainloop()
+
+accueil()

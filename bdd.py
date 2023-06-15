@@ -139,8 +139,8 @@ def liste_classe_eleve():
 def liste_classe_eleve_reel():
     req_liste_classe_eleve_reel = "SELECT id " \
                                  "FROM Classe " \
-                                 "WHERE id != 'Or' "\
-                                 "AND id != 'Toutes_les_classe' "
+                                 "WHERE id != 'Or' " \
+                                  "AND id != 'Toutes_les_classes'"
     cursor.execute(req_liste_classe_eleve_reel)
     return cursor.fetchall()
 
@@ -156,16 +156,17 @@ def liste_eleve():
 
 def liste_eleve_avec_casier():
     # retourne la liste de tous les eleves
-    req_liste_eleve = "SELECT Casier_id, id, Prenom " \
+    req_liste_eleve = "SELECT Casier_id, Nom, Prenom " \
                       "FROM Identite " \
-                      "WHERE Classe_id != 'Or' AND Casier_id IS NOT NULL"
+                      "WHERE Classe_id != 'Or' " \
+                      "AND Casier_id IS NOT NULL"
     cursor.execute(req_liste_eleve)
     return cursor.fetchall()
 
 
 def liste_eleve_par_classe(classe):
     # retourne la liste de tous les eleves d'une classe
-    req_liste_eleve_par_classe = f"SELECT Casier_id, id, prenom " \
+    req_liste_eleve_par_classe = f"SELECT Casier_id, Nom, prenom " \
                                  f"FROM Identite " \
                                  f"WHERE Classe_id = '{classe}'"
     cursor.execute(req_liste_eleve_par_classe)
@@ -176,7 +177,8 @@ def liste_eleve_avec_casier_par_classe(classe):
     # retourne la liste de tous les eleves d'une classe
     req_liste_eleve_par_classe = f"SELECT Casier_id, id, prenom " \
                                  f"FROM Identite " \
-                                 f"WHERE Classe_id = '{classe}' AND Casier_id IS NOT NULL"
+                                 f"WHERE Classe_id = '{classe}' " \
+                                 f"AND Casier_id IS NOT NULL"
     cursor.execute(req_liste_eleve_par_classe)
     return cursor.fetchall()
 
@@ -262,7 +264,7 @@ def obtenir_no_casier(uid):
 
     cursor.execute(req_obtenir_no_casier)
 
-    # commit obligatoire pour mise à jour  la base donnée
+    # commit obligatoire pour mise à jour de la base donnée
     baseDeDonnees.commit()
 
 
@@ -273,7 +275,7 @@ def supprimer_eleve(id):
 
     cursor.execute(req_supprimer_eleve)
 
-    # commit obligatoire pour mise à jour  la base donnée
+    # commit obligatoire pour mise à jour de la base donnée
     baseDeDonnees.commit()
 
 
@@ -284,7 +286,7 @@ def supprimer_classe(classe_id):
 
     cursor.execute(req_supprimer_classe)
 
-    # commit obligatoire pour mise à jour  la base donnée
+    # commit obligatoire pour mise à jour de la base donnée
     baseDeDonnees.commit()
 
 
