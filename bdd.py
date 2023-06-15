@@ -275,12 +275,10 @@ def modifier_eleve(id, uid, nom, prenom, classe, casier):
 
 def obtenir_info_avec_id(id):
     req_obtenir_info_avec_id =  "SELECT Nom, Prenom, NoCarte, Classe_id, Casier_id " \
-                                "FROM Identite" \
+                                "FROM Identite " \
                                 f"WHERE id = '{id}'"
 
     cursor.execute(req_obtenir_info_avec_id)
-    # commit obligatoire pour mise à jour de la base donnée
-    baseDeDonnees.commit()
 
 
 
