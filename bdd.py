@@ -156,7 +156,7 @@ def liste_eleve():
 
 def liste_eleve_avec_casier():
     # retourne la liste de tous les eleves
-    req_liste_eleve = "SELECT Casier_id, Nom, Prenom " \
+    req_liste_eleve = "SELECT Casier_id, id, Prenom " \
                       "FROM Identite " \
                       "WHERE Classe_id != 'Or' " \
                       "AND Casier_id IS NOT NULL"
@@ -166,7 +166,7 @@ def liste_eleve_avec_casier():
 
 def liste_eleve_par_classe(classe):
     # retourne la liste de tous les eleves d'une classe
-    req_liste_eleve_par_classe = f"SELECT Casier_id, Nom, prenom " \
+    req_liste_eleve_par_classe = f"SELECT Casier_id, id, prenom " \
                                  f"FROM Identite " \
                                  f"WHERE Classe_id = '{classe}'"
     cursor.execute(req_liste_eleve_par_classe)
@@ -274,14 +274,11 @@ def modifier_eleve(id, uid, nom, prenom, classe, casier):
 
 
 def obtenir_info_avec_id(id):
-    req_obtenir_info_avec_id =  "SELECT Nom, Prenom, NoCarte, Classe_id, Casier_id " \
-                                "FROM Identite" \
-                                f"WHERE id = '{id}'"
-
+    req_obtenir_info_avec_id = "SELECT NoCarte, Nom, Prenom, Casier_id, Classe_id, id " \
+                               "FROM Identite " \
+                               f"WHERE id = '{id}'"
     cursor.execute(req_obtenir_info_avec_id)
-    # commit obligatoire pour mise à jour de la base donnée
-    baseDeDonnees.commit()
-
+    return cursor.fetchone()
 
 
 #requête qui permet de récupérer un numéro de casier grâce à l'uid
@@ -291,9 +288,6 @@ def obtenir_no_casier(uid):
                             f"WHERE uid = '{uid}'"
 
     cursor.execute(req_obtenir_no_casier)
-
-    # commit obligatoire pour mise à jour de la base donnée
-    baseDeDonnees.commit()
 
 
 #supprimer un élève

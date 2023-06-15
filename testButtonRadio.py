@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import ttk
+import tkinter as tk
 import tkinter.messagebox as mbox
+
+from ListClasse import ListClasse
 from bdd import *
 
 
@@ -13,10 +16,10 @@ def update_data_vue_eleve():
     classe = valeur_defaut_combobox_eleve.get()
 
     if classe == "Toutes_les_classes":
-        eleves = liste_eleve_avec_casier()
+        eleves = liste_eleve()
     else:
         # recuperation de liste d'eleve de la classe du dropdown
-        eleves = liste_eleve_avec_casier_par_classe(classe)
+        eleves = liste_eleve_par_classe(classe)
 
     # on efface la liste pré-existante
     my_tree_eleve.delete(*my_tree_eleve.get_children())
@@ -28,34 +31,227 @@ def update_data_vue_eleve():
 # Fonction appelée lorsque vous sélectionnez un élément de la liste de gauche
 def on_tree_eleve_select(event):
     selected_item = my_tree_eleve.focus()  # Récupère l'élément sélectionné
-    values = my_tree_eleve.item(selected_item, 'values')  # Récupère les valeurs de l'élément sélectionné
+    if len(selected_item) > 0:
+        id = my_tree_eleve.item(selected_item, 'values')[1]  # Récupère les valeurs de l'élément sélectionné
+        recuperer_info_avec_id(id)
 
 
 # Fonction de mise à jour des données de la liste de gauche lors du changement de classe sélectionnée
 def on_class_eleve_select(*args):
     update_data_vue_eleve()
 
-########################################################################################################################################################
-
-
-# fonction casier
-########################################################################################################################################################
-
-
 
 ########################################################################################################################################################
 
 
-# fonction clear formulaire
+# fonction verfication formulaire
 ########################################################################################################################################################
+
+def verif_uid(uid):
+    res = False
+    id = label_id_eleve.cget("text")
+    if len(uid) == 0 or uid == "":
+        res = True
+        lbl_error_uid.grid_forget()
+    elif len(uid) <= 16 and uid.replace("-", "").isdigit():
+        if uid_existe(uid) == 1 and len(id) == 0:
+            utilisateur = identite_utilisateur_uid(uid)
+            result_uid = mbox.askyesno("UID utilisé", "L'UID scanné est utilisé, \n "
+                                                    f"Voulez vous remplacer l'utilisateur {utilisateur} ?")
+            error = "UID utilisé"
+            if result_uid:
+                res = True
+                lbl_error_uid.grid(row=2, column=0, columnspan=10)
+                efface_uid(uid)
+        else:
+            res = True
+            lbl_error_uid.grid_forget()
+    else:
+        error = "UID ne doit pas dépasser 16 caractères"
+
+    if not res:
+        lbl_error_uid.configure(text=error)
+        lbl_error_uid.grid(row=2, column=0, columnspan=10)
+
+    return res
+
+def verif_nom(nom):
+    res = False
+    nomrepl = nom.replace("-", "")
+    nomrepl = nomrepl.replace(" ", "")
+    if len(nom) >= 2 and nomrepl.isalpha():
+        res = True
+        lbl_error_nom.grid_forget()
+    else:
+        lbl_error_nom.grid(row=3, columnspan=10)
+        lbl_error_nom.configure(text="2 caractères minimum et uniquement des lettres")
+    return res
+
+
+def verif_prenom(prenom):
+    res = False
+    prenomrepl = prenom.replace("-", "")
+    prenomrepl = prenomrepl.replace(" ", "")
+    if len(prenom) >= 2 and prenomrepl.isalpha():
+        res = True
+        lbl_error_prenom.grid_forget()
+    else:
+        lbl_error_prenom.grid(row=5, columnspan=10)
+        lbl_error_prenom.configure(text="2 caractères minimum et uniquement des lettres")
+    return res
+
+
+def verif_classe(classe):
+    verifClasse = classe in ListClasse.LIBELLE.value
+    res = False
+    if verifClasse:
+        res = True
+        lbl_error_classe.grid_forget()
+    else:
+        lbl_error_classe.grid(row=7, columnspan=10)
+        lbl_error_classe.configure(text="Erreur dans le libellé de la classe")
+    return res
+
+
+def verif_casier(casier):
+    res = False
+    id = label_id_eleve.cget("text")
+    if len(casier) == 0:
+        res = True
+        lbl_error_casier.grid_forget()
+    elif casier.isdigit():
+        if 1 <= int(casier) <= 6:
+            if demande_casier(casier) > 0 and len(id) == 0:
+                utilisateur = identite_utilsateur_casier(casier)
+                result_casier = mbox.askyesno("Casier occupé", "Le casier selectionné est occupé, \n "
+                                               f"Voulez vous remplacer l'utilisateur {utilisateur} ?")
+                error = "Casier occupé"
+                if result_casier:
+                    res = True
+                    lbl_error_casier.grid_forget()
+                    efface_casier(casier)
+            else:
+                casier_libre_occupe(casier)
+                res = True
+                lbl_error_casier.grid_forget()
+        else:
+            error = "Numero de casier inexistant"
+    else:
+        error = "numero de casier doit etre un entier !"
+    if not res:
+        lbl_error_casier.grid(row=9, columnspan=10)
+        lbl_error_casier.configure(text=error)
+    return res
+
+########################################################################################################################################################
+
+
+# fonction formulaire eleve
+########################################################################################################################################################
+
+def verification_Entrer(event):
+    verifier_donnee_formulaire()
+
+
+def verifier_donnee_formulaire():
+    res = False
+    uid = entry_uid_new_eleve.get().strip()
+    nom = entryNomAjoutEleve.get().upper().strip()
+    prenom = entryPrenomAjoutEleve.get().capitalize().strip()
+    casier = entryNoCasierAjoutEleve.get().strip()
+    classe = new_eleve_class.get()
+
+    if verif_uid(uid) & verif_nom(nom) & verif_prenom(prenom) & verif_classe(classe) & verif_casier(casier):
+        print()
+        print("Fin validation")
+        print()
+        res = True
+        validation(uid, nom, prenom, classe, casier)
+    else:
+        mbox.showerror("Erreur !", message="Corrigez les erreurs !")
+    return res
+
+
+def creation_identifiant(nom):
+    base_id = nom[:10].upper()
+    chiffre = 1
+    identifiant = base_id + str(chiffre)
+
+    # On vérifie si l'identifiant existe déjà dans la base de données
+    while identifiant_existe(identifiant) == 1:
+        identifiant = base_id + str(chiffre)
+        chiffre += 1
+
+    return identifiant
+
+
+def validation(uid, nom, prenom, classe, casier):
+    count = demande_ajout(nom, prenom, classe)
+    id = label_id_eleve.cget("text")
+    res = False
+    if count > 0 and len(id) == 0:
+        result_eleve = mbox.askyesno("Elève existant !", "Il existe au moins un élève avec le même nom et le même prénom dans cette classe. \n"
+                                           "Continuer l'ajout ?")
+        if result_eleve:
+            print("yes")
+            res = True
+    else:
+        result_final = mbox.askyesno("Confirmation avant ajout", f"uid : {uid} \n nom : {nom} \n "
+                                                           f"prenom : {prenom} \n "
+                                                           f"classe : {classe} \n "
+                                                           f"casier : {casier} \n "
+                                                           f"Est-ce correct ?")
+        if result_final:
+            print("yes")
+            res = True
+    if res:
+        if len(id) > 0:
+            supprimer_eleve(id)
+
+        identifiant = creation_identifiant(nom)
+        ajout_eleve(uid, identifiant, nom, prenom, classe, casier)
+        clear_formulaire_eleve()
+        update_data_vue_eleve()
+
+def ajout_on_click():
+    verifier_donnee_formulaire()
+
+
+def supprimer_on_click():
+    id = label_id_eleve.cget("text")
+    if len(id) > 0:
+        utilisateur = obtenir_info_avec_id(id)
+        confirm = mbox.askyesno("Attention suppression imminente !",
+                                f"Vous vous apprêtez à supprimer l'élève {utilisateur[1], utilisateur[2], utilisateur[4]}."
+                                f"Supprimer ?")
+        if confirm:
+            supprimer_eleve(id)
+            update_data_vue_eleve()
+
 
 def clear_formulaire_eleve():
-    entry_uid_new_eleve.selection_clear()
-    entryNomAjoutEleve.select_clear()
-    entryPrenomAjoutEleve.selection_clear()
-    entryNoCasierAjoutEleve.selection_clear()
+    entry_uid_new_eleve.delete(0, tk.END)
+    entryNomAjoutEleve.delete(0, tk.END)
+    entryPrenomAjoutEleve.delete(0, tk.END)
+    entryNoCasierAjoutEleve.delete(0, tk.END)
     new_eleve_class.set("Selection de la classe")
 
+
+def recuperer_info_avec_id(id):
+    info_eleve = obtenir_info_avec_id(id)
+    remplir_formulaire_ajout_eleve(info_eleve)
+
+
+def remplir_formulaire_ajout_eleve(eleve):
+    clear_formulaire_eleve()
+    if eleve[0] is not None:
+        entry_uid_new_eleve.insert(tk.END, eleve[0])
+    entryNomAjoutEleve.insert(tk.END, eleve[1])
+    entryPrenomAjoutEleve.insert(tk.END, eleve[2])
+    if eleve[3] is not None:
+        entryNoCasierAjoutEleve.insert(tk.END, eleve[3])
+    new_eleve_class.set(eleve[4])
+    label_id_eleve.configure(text=eleve[5])
 
 ########################################################################################################################################################
 
@@ -206,9 +402,10 @@ my_tree_eleve.column("NoCasier", anchor=W, width=80)
 my_tree_eleve.column("nom", anchor=W, width=150)
 my_tree_eleve.column("prenom", anchor=W, width=150)
 my_tree_eleve.heading("NoCasier", text="N° casier")
-my_tree_eleve.heading("nom", text="Nom")
+my_tree_eleve.heading("nom", text="id")
 my_tree_eleve.heading("prenom", text="Prenom")
 my_tree_eleve.pack(side=LEFT)
+my_tree_eleve.bind("<<TreeviewSelect>>", on_tree_eleve_select)
 
 # ScanBadge
 btnScanUidEleve = Button(div_vue_eleve3, text="Scanner Badge", width=12, background="lightgrey")
@@ -220,6 +417,9 @@ lbl_uid_new_eleve.grid(row=0, column=1)
 
 entry_uid_new_eleve = Entry(div_vue_eleve3)
 entry_uid_new_eleve.grid(row=0, column=2)
+
+#label id eleve
+label_id_eleve = Label(div_vue_eleve3, text="")
 
 #entry + lbl nom
 lblNomAjoutEleve = Label(div_vue_eleve3, text="Nom:")
@@ -248,6 +448,9 @@ options_new_eleve_class = liste_classe_eleve_reel()
 new_eleve_class = ttk.Combobox(div_vue_eleve3, textvariable=variable_new_eleve_class, values=options_new_eleve_class, width=20, state="readonly")
 new_eleve_class.grid(row=0, column=9)
 
+# BtnSupprimer
+btn_supprimer_eleve = Button(div_vue_eleve3, text="Supprimer", width=10, background="#D21F3C", command=supprimer_on_click)
+btn_supprimer_eleve.grid(row=1, column=6)
 # BtnVider
 btn_vider_champ_eleve = Button(div_vue_eleve3, text="Vider", width=10, background="lightgrey", command=clear_formulaire_eleve)
 btn_vider_champ_eleve.grid(row=1, column=7)
@@ -257,8 +460,15 @@ btnModifierEleve = Button(div_vue_eleve3, text="Modifier", width=10, background=
 btnModifierEleve.grid(row=1, column=8)
 
 # BtnAjouter
-btnAddEleve = Button(div_vue_eleve3, text="Valider", width=10, background="lightgrey") # #05EE07
+btnAddEleve = Button(div_vue_eleve3, text="Valider", width=10, background="lightgrey", command=ajout_on_click) # #05EE07
 btnAddEleve.grid(row=1, column=9)
+
+# Liste d'erreur
+lbl_error_uid = Label(div_vue_eleve3, text="", fg="red")
+lbl_error_nom = Label(div_vue_eleve3, text="", fg="red")
+lbl_error_prenom = Label(div_vue_eleve3, text="", fg="red")
+lbl_error_casier = Label(div_vue_eleve3, text="", fg="red")
+lbl_error_classe = Label(div_vue_eleve3, text="", fg="red")
 
 ##########################################################################################################################################################
 
