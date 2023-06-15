@@ -80,7 +80,7 @@ VALUES ('170-1-62-61', 'MENNINGER', 'Jason', 'Jaune', NULL, 'MENNINGER1', 4),
        ('15-55-62-61', 'VIARDOT', 'Thibault', 'Rouge', NULL, 'VIARDOT1', 3),
        ('142-62-61-61', 'AGOZZINO', 'Anthony', 'Bleu', NULL, 'AGOZZINO1', 6);
 --
-INSERT INTO Log(id, Eleve_id, Recupere, Casier_id) VALUES (DATE_FORMAT(NOW(), '%d/%m/%y %H:%i:%s'), 'VIARDOT1', 'TEL', 1);
+# INSERT INTO Log(id, Eleve_id, Recupere, Casier_id) VALUES (DATE_FORMAT(NOW(), '%d/%m/%y %H:%i:%s'), 'VIARDOT1', 'TEL', 1);
 #                                                           (DATE_FORMAT(NOW(), '%d/%m/%y %H:%i:%s'), 'TIJOU1', 'CLE', 2),
 #                                                           (DATE_FORMAT(NOW(), '%d/%m/%y %H:%i:%s'), 'MENNINGER1', 'RIEN', 1);
 --

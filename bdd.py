@@ -156,7 +156,7 @@ def liste_eleve():
 
 def liste_eleve_avec_casier():
     # retourne la liste de tous les eleves
-    req_liste_eleve = "SELECT Casier_id, id, Prenom " \
+    req_liste_eleve = "SELECT Casier_id, Nom, Prenom " \
                       "FROM Identite " \
                       "WHERE Classe_id != 'Or' " \
                       "AND Casier_id IS NOT NULL"
@@ -175,7 +175,7 @@ def liste_eleve_par_classe(classe):
 
 def liste_eleve_avec_casier_par_classe(classe):
     # retourne la liste de tous les eleves d'une classe
-    req_liste_eleve_par_classe = f"SELECT Casier_id, id, prenom " \
+    req_liste_eleve_par_classe = f"SELECT Casier_id, Nom, prenom " \
                                  f"FROM Identite " \
                                  f"WHERE Classe_id = '{classe}' " \
                                  f"AND Casier_id IS NOT NULL"
