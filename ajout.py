@@ -184,7 +184,7 @@ def validation(uid, nom, prenom, classe, casier):
         if result_eleve:
             print("yes")
             identifiant = creation_identifiant(nom, prenom)
-            ajout(uid, identifiant, nom, prenom, classe, casier)
+            ajout_eleve(uid, identifiant, nom, prenom, classe, casier)
     else:
         result_final = mbox.askyesno("Confirmation avant ajout", f"uid : {uid} \n nom : {nom} \n "
                                                            f"prenom : {prenom} \n "
@@ -194,7 +194,7 @@ def validation(uid, nom, prenom, classe, casier):
         if result_final:
             print("yes")
             identifiant = creation_identifiant(nom, prenom)
-            ajout(uid, identifiant, nom, prenom, classe, casier)
+            ajout_eleve(uid, identifiant, nom, prenom, classe, casier)
 
 def switch_to_second_page():
     # Destruction des éléments de la première page

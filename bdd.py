@@ -192,7 +192,7 @@ def liste_casier_libre():
     return cursor.fetchall()
 
 
-def ajout(uid, identifiant, nom, prenom, classe, casier):
+def ajout_eleve(uid, identifiant, nom, prenom, classe, casier):
     # ajouter un utilisateur a la base de donnée
     # if len(uid) == 0 and len(casier) == 0:
     #     # condition sans uid et sans casier
@@ -234,26 +234,54 @@ def ajout(uid, identifiant, nom, prenom, classe, casier):
 
 def modifier_eleve(id, uid, nom, prenom, classe, casier):
     # modifier un utilisateur de la base de donnée
-    if len(uid) == 0 and len(casier) == 0:
-        req_modif = "UPDATE Identite " \
-                    f"SET Nom = '{nom}', Prenom = '{prenom}', Classe_id = '{classe}' " \
-                    f"WHERE id = '{id}'"
-    elif len(uid) == 0:
-        req_modif = "UPDATE Identite " \
-                    f"SET Nom = '{nom}', Prenom = '{prenom}', Classe_id = '{classe}', Casier_id = {casier} " \
-                    f"WHERE id = '{id}'"
-    elif len(casier) == 0:
-        req_modif = "UPDATE Identite " \
-                    f"SET NoCarte = '{uid}', Nom = '{nom}', Prenom = '{prenom}', Classe_id = '{classe}' " \
-                    f"WHERE id = '{id}'"
-    else:
-        req_modif = "UPDATE Identite " \
-                    f"SET NoCarte = '{uid}', Nom = '{nom}', Prenom = '{prenom}', " \
-                    f"Classe_id = '{classe}', Casier_id = {casier} " \
-                    f"WHERE id = '{id}'"
+    # if len(uid) == 0 and len(casier) == 0:
+    #     req_modif = "UPDATE Identite " \
+    #                 f"SET Nom = '{nom}', Prenom = '{prenom}', Classe_id = '{classe}' " \
+    #                 f"WHERE id = '{id}'"
+    # elif len(uid) == 0:
+    #     req_modif = "UPDATE Identite " \
+    #                 f"SET Nom = '{nom}', Prenom = '{prenom}', Classe_id = '{classe}', Casier_id = {casier} " \
+    #                 f"WHERE id = '{id}'"
+    # elif len(casier) == 0:
+    #     req_modif = "UPDATE Identite " \
+    #                 f"SET NoCarte = '{uid}', Nom = '{nom}', Prenom = '{prenom}', Classe_id = '{classe}' " \
+    #                 f"WHERE id = '{id}'"
+    # else:
+    #     req_modif = "UPDATE Identite " \
+    #                 f"SET NoCarte = '{uid}', Nom = '{nom}', Prenom = '{prenom}', " \
+    #                 f"Classe_id = '{classe}', Casier_id = {casier} " \
+    #                 f"WHERE id = '{id}'"
+
+    req_modif = "UPDATE Identite " \
+                "SET " \
+
+    if len(nom) > 0:
+        req_modif += f"Nom = '{nom}', "
+    if len(prenom) > 0:
+        req_modif += f"Prenom = '{prenom}', "
+    if len(classe) > 0:
+        req_modif += f"Classe_id = '{classe}', "
+    if len(casier) > 0:
+        req_modif += f"Casier_id = '{casier}', "
+    if len(uid) > 0:
+        req_modif += f"NoCarte = '{uid}'"
+
+    req_modif += f"WHERE id = '{id}'"
+
     cursor.execute(req_modif)
     # commit obligatoire pour mise à jour de la base donnée
     baseDeDonnees.commit()
+
+
+def obtenir_info_avec_id(id):
+    req_obtenir_info_avec_id =  "SELECT Nom, Prenom, NoCarte, Classe_id, Casier_id " \
+                                "FROM Identite" \
+                                f"WHERE id = '{id}'"
+
+    cursor.execute(req_obtenir_info_avec_id)
+    # commit obligatoire pour mise à jour de la base donnée
+    baseDeDonnees.commit()
+
 
 
 #requête qui permet de récupérer un numéro de casier grâce à l'uid
