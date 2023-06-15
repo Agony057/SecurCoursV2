@@ -5,7 +5,7 @@ from bdd import *
 # Fonction de mise à jour des données de la liste de gauche en fonction de la classe sélectionnée
 def update_data_casier():
     # Désactiver bouton valider tant qu'aucune ligne n'est sélectionné
-    button_valider.configure(state="disabled")
+    button_valider_casier.configure(state="disabled")
 
     # recupération du nom de la classe
     classe = valeur_defaut_combobox_casier.get()
@@ -26,19 +26,19 @@ def update_data_casier():
 
 # Fonction appelée lorsque vous sélectionnez un élément de la liste de gauche
 def on_tree_casier_select(event):
-    button_valider.configure(state="normal")
+    button_valider_casier.configure(state="normal")
 
 
 # Fonction de mise à jour des données de la liste de gauche lors du changement de classe sélectionnée
 def on_class_casier_select(*args):
     # Désactiver bouton valider tant qu'aucune ligne n'est sélectionné
-    button_valider.configure(state="disabled")
+    button_valider_casier.configure(state="disabled")
     update_data_casier()
 
 
 def casier_click_on_valider():
     # Désactiver bouton valider tant qu'aucune ligne n'est sélectionné
-    button_valider.configure(state="disabled")
+    button_valider_casier.configure(state="disabled")
     # Récupère l'élément sélectionné
     selected_item = my_tree_casier.focus()
     # Récupère les valeurs de l'élément sélectionné
@@ -108,8 +108,8 @@ btn_radio_oublie_badge.pack(anchor=W)
 btn_radio_oublie_cle.pack(anchor=W)
 btn_radio_oublie_telephone.pack(anchor=W)
 
-button_valider = Button(sous_div2_page_casier, text="Valider", state="disabled", command=casier_click_on_valider)
-button_valider.pack(side=BOTTOM)
+button_valider_casier = Button(sous_div2_page_casier, text="Valider", state="disabled", command=casier_click_on_valider)
+button_valider_casier.pack(side=BOTTOM)
 
 update_data_casier()
 fenetre.mainloop()
