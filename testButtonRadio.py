@@ -426,7 +426,7 @@ blank_label = Label(div_page_casier,text="MODE ADMIN", width=50)
 blank_label.pack(side=LEFT)
 
 # BtnEleve
-btn_eleve = Button(div_page_casier, text="Gestion elèves", command=construction_page_eleve)
+btn_eleve = Button(div_page_casier, text="Gestion elèves", width=11, background="lightgrey", command=construction_page_eleve)
 btn_eleve.pack(side=LEFT)
 
 # BLANK
@@ -434,7 +434,7 @@ blank_label = Label(div_page_casier, width=10)
 blank_label.pack(side=LEFT)
 
 # BtnQuitter
-btn_accueil_casier = Button(div_page_casier, text="Accueil", command=retour_accueil)
+btn_accueil_casier = Button(div_page_casier, text="Accueil", width=11, background="lightgrey", command=retour_accueil)
 btn_accueil_casier.pack(side=LEFT)
 
 # Liste de gauche
@@ -461,7 +461,7 @@ btn_radio_oublie_badge.pack(anchor=W)
 btn_radio_oublie_cle.pack(anchor=W)
 btn_radio_oublie_telephone.pack(anchor=W)
 
-button_valider_casier = Button(sous_div2_page_casier, text="Valider", state="disabled", command=casier_click_on_valider)
+button_valider_casier = Button(sous_div2_page_casier, text="Valider", width=11, background="lightgrey", state="disabled", command=casier_click_on_valider)
 button_valider_casier.pack(side=BOTTOM)
 
 ####################################################################################################################################################################
