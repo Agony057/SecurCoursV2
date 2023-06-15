@@ -46,6 +46,19 @@ def on_class_eleve_select(*args):
 ########################################################################################################################################################
 
 
+# fonction clear formulaire
+########################################################################################################################################################
+
+def clear_formulaire_eleve():
+    entry_uid_new_eleve.selection_clear()
+    entryNomAjoutEleve.select_clear()
+    entryPrenomAjoutEleve.selection_clear()
+    entryNoCasierAjoutEleve.selection_clear()
+    new_eleve_class.set("Selection de la classe")
+
+
+########################################################################################################################################################
+
 # fonction forget
 ########################################################################################################################################################
 
@@ -170,19 +183,19 @@ select_eleve_classes.pack(side=LEFT)
 select_eleve_classes.bind("<<ComboboxSelected>>", on_class_eleve_select)
 
 # BLANK
-blank_label = Label(div_vue_eleve, text="MODE ADMIN", width=50)
-blank_label.pack(side=LEFT)
+blank_label_eleve = Label(div_vue_eleve, text="MODE ADMIN", width=50)
+blank_label_eleve.pack(side=LEFT)
 
 # BtnEleve
-btn_vers_casier = Button(div_vue_eleve, text="Gestion casier")
+btn_vers_casier = Button(div_vue_eleve, text="Gestion casier", width=11, background="lightgrey")
 btn_vers_casier.pack(side=LEFT)
 
 # BLANK
-blank_label = Label(div_vue_eleve, width=10)
-blank_label.pack(side=LEFT)
+blank_label_eleve = Label(div_vue_eleve, width=10)
+blank_label_eleve.pack(side=LEFT)
 
 # BtnQuitter
-btn_accueil_eleve = Button(div_vue_eleve, text="Accueil", command=retour_accueil)
+btn_accueil_eleve = Button(div_vue_eleve, text="Accueil", command=retour_accueil, width=11, background="lightgrey")
 btn_accueil_eleve.pack(side=LEFT)
 
 # Liste de gauche
@@ -197,24 +210,16 @@ my_tree_eleve.heading("nom", text="Nom")
 my_tree_eleve.heading("prenom", text="Prenom")
 my_tree_eleve.pack(side=LEFT)
 
-# BtnAjouter
-btnAddEleve = Button(div_vue_eleve3, text="Valider", width=12, background="lightgreen")
-btnAddEleve.grid(row=0, column=0)
-
 # ScanBadge
-btnScanUidEleve = Button(div_vue_eleve3, text="Scanner Badge", width=12, background="lightblue")
-btnScanUidEleve.grid(row=0, column=1, columnspan=2)
-
-# BtnAnnuler
-btn_annuler_eleve = Button(div_vue_eleve3, text="Annuler", width=12, background="orange")
-btn_annuler_eleve.grid(row=1, column=0)
+btnScanUidEleve = Button(div_vue_eleve3, text="Scanner Badge", width=12, background="lightgrey")
+btnScanUidEleve.grid(row=0, column=0)
 
 #entry + lbl UID
 lbl_uid_new_eleve = Label(div_vue_eleve3, text="UID:")
-lbl_uid_new_eleve.grid(row=1, column=1)
+lbl_uid_new_eleve.grid(row=0, column=1)
 
 entry_uid_new_eleve = Entry(div_vue_eleve3)
-entry_uid_new_eleve.grid(row=1, column=2)
+entry_uid_new_eleve.grid(row=0, column=2)
 
 #entry + lbl nom
 lblNomAjoutEleve = Label(div_vue_eleve3, text="Nom:")
@@ -242,6 +247,18 @@ variable_new_eleve_class = StringVar(div_vue_eleve3)
 options_new_eleve_class = liste_classe_eleve_reel()
 new_eleve_class = ttk.Combobox(div_vue_eleve3, textvariable=variable_new_eleve_class, values=options_new_eleve_class, width=20, state="readonly")
 new_eleve_class.grid(row=0, column=9)
+
+# BtnVider
+btn_vider_champ_eleve = Button(div_vue_eleve3, text="Vider", width=10, background="lightgrey", command=clear_formulaire_eleve)
+btn_vider_champ_eleve.grid(row=1, column=7)
+
+# BtnAjouter
+btnModifierEleve = Button(div_vue_eleve3, text="Modifier", width=10, background="lightgrey") # #0BDB65
+btnModifierEleve.grid(row=1, column=8)
+
+# BtnAjouter
+btnAddEleve = Button(div_vue_eleve3, text="Valider", width=10, background="lightgrey") # #05EE07
+btnAddEleve.grid(row=1, column=9)
 
 ##########################################################################################################################################################
 
