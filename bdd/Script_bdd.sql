@@ -44,16 +44,6 @@ CREATE TABLE Identite(
 	FOREIGN KEY (Casier_id) REFERENCES Casier(id)
 );
 --
-CREATE TABLE Log(
-    id DATETIME,
-    Eleve_id VARCHAR(12),
-    Recupere VARCHAR(4) DEFAULT 'RIEN' CHECK(Recupere IN('TEL', 'CLE','RIEN')),
-    Casier_id INT,
-    PRIMARY KEY (id),
-    FOREIGN KEY (Eleve_id) REFERENCES Identite(id),
-	FOREIGN KEY (Casier_id) REFERENCES Casier(id)
-);
---
 -- ---------------------------------------------------------------------------------------------------------------------
 -- -------------------------------------------- || Insertion données || ------------------------------------------------
 -- ---------------------------------------------------------------------------------------------------------------------
@@ -80,11 +70,7 @@ VALUES ('170-1-62-61', 'MENNINGER', 'Jason', 'Jaune', NULL, 'MENNINGER1', 4),
        ('15-55-62-61', 'VIARDOT', 'Thibault', 'Rouge', NULL, 'VIARDOT1', 3),
        ('142-62-61-61', 'AGOZZINO', 'Anthony', 'Bleu', NULL, 'AGOZZINO1', 6);
 --
-# INSERT INTO Log(id, Eleve_id, Recupere, Casier_id) VALUES (DATE_FORMAT(NOW(), '%d/%m/%y %H:%i:%s'), 'VIARDOT1', 'TEL', 1);
-#                                                           (DATE_FORMAT(NOW(), '%d/%m/%y %H:%i:%s'), 'TIJOU1', 'CLE', 2),
-#                                                           (DATE_FORMAT(NOW(), '%d/%m/%y %H:%i:%s'), 'MENNINGER1', 'RIEN', 1);
---
--- -------------------------------------- || 2 select pour verifier les données des 2 tables || ------------------------
+-- --------------------------------------- || select pour verifier les données des tables || --------------------------
 -- 
 SELECT * FROM Classe ORDER BY Libelle;
 SELECT * FROM Identite ORDER BY Nom;

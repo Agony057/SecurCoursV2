@@ -8,7 +8,7 @@ from bdd import *
 
 
 # fonction eleves
-#####################################################################################################################################################################
+########################################################################################################################
 
 # Fonction de mise à jour des données de la liste de gauche en fonction de la classe sélectionnée
 def update_data_vue_eleve():
@@ -41,11 +41,11 @@ def on_class_eleve_select(*args):
     update_data_vue_eleve()
 
 
-########################################################################################################################################################
+########################################################################################################################
 
 
 # fonction casier
-########################################################################################################################################################
+########################################################################################################################
 
 # Fonction de mise à jour des données de la liste de gauche en fonction de la classe sélectionnée
 def update_data_casier():
@@ -75,8 +75,8 @@ def on_tree_casier_select(event):
 
 # Fonction de mise à jour des données de la liste de gauche lors du changement de classe sélectionnée
 def on_class_casier_select(*args):
-    # Désactiver bouton valider tant qu'aucune ligne n'est sélectionné
     update_data_casier()
+    # Désactiver bouton valider tant qu'aucune ligne n'est sélectionné
     # button_valider_casier.configure(state="disabled")
 
 
@@ -85,16 +85,16 @@ def casier_click_on_valider():
     selected_item = my_tree_casier.focus()
     # Récupère les valeurs de l'élément sélectionné
     casier_values = my_tree_casier.item(selected_item, 'values')
-    mbox.showwarning("information",casier_values[0] + " "+ str(choix_radio_btn_casier.get()))
+    mbox.showwarning("information", casier_values[0] + " " + str(choix_radio_btn_casier.get()))
     print(casier_values[0] + " " + casier_values[1] + " " + casier_values[2] + " " + str(choix_radio_btn_casier.get()))
     # Désactiver bouton valider tant qu'aucune ligne n'est sélectionné
     button_valider_casier.configure(state="disabled")
 
-########################################################################################################################################################
+########################################################################################################################
 
 
 # fonction verfication formulaire
-########################################################################################################################################################
+########################################################################################################################
 
 def verif_uid(uid):
     res = False
@@ -116,7 +116,7 @@ def verif_uid(uid):
             res = True
             lbl_error_uid.grid_forget()
     else:
-        error = "UID ne doit pas dépasser 16 caractères"
+        error = "UID ne doit pas dépasser 16 caractères et ne contenir que des chiffres et des tirets"
 
     if not res:
         lbl_error_uid.configure(text=error)
@@ -192,11 +192,11 @@ def verif_casier(casier):
         lbl_error_casier.configure(text=error)
     return res
 
-########################################################################################################################################################
+########################################################################################################################
 
 
 # fonction formulaire eleve
-########################################################################################################################################################
+########################################################################################################################
 
 def verification_Entrer(event):
     verifier_donnee_formulaire()
@@ -304,10 +304,10 @@ def remplir_formulaire_ajout_eleve(eleve):
     new_eleve_class.set(eleve[4])
     label_id_eleve.configure(text=eleve[5])
 
-########################################################################################################################################################
+########################################################################################################################
 
 # fonction forget
-########################################################################################################################################################
+########################################################################################################################
 
 def forget_all():
     forget_page_accueil()
@@ -324,17 +324,27 @@ def forget_page_eleve():
     div_vue_eleve.pack_forget()
     div_vue_eleve2.pack_forget()
     div_vue_eleve3.pack_forget()
+    forget_erreur_formulaire()
 
 
 def forget_page_accueil():
     label_principal.pack_forget()
     testbouton.pack_forget()
+    testBoutonEleve.pack_forget()
 
-########################################################################################################################################################
+
+def forget_erreur_formulaire():
+    lbl_error_uid.grid_forget()
+    lbl_error_nom.grid_forget()
+    lbl_error_prenom.grid_forget()
+    lbl_error_casier.grid_forget()
+    lbl_error_classe.grid_forget()
+
+########################################################################################################################
 
 
 # fonction construction de page
-########################################################################################################################################################
+########################################################################################################################
 
 def construction_page_casier():
     forget_all()
@@ -370,36 +380,43 @@ def page_eleve():
 def accueil():
     label_principal.pack(pady=20, padx=20)
     testbouton.pack()
+    testBoutonEleve.pack()
 
-########################################################################################################################################################
+
+def afficherbox():
+    mbox.showwarning("carte élève", "Bonjour { Nom, Prenom }.")
+
+########################################################################################################################
 
 
 # fonction retour
-########################################################################################################################################################
+########################################################################################################################
 
 def retour_accueil():
     result_retour = mbox.askyesno("Confirmation", "Etes-vous sûr de vouloir quitter le mode ADMIN ?")
     if result_retour:
         construction_accueil()
 
-########################################################################################################################################################
+########################################################################################################################
 
 
 fenetre = Tk()
 
 # Badge Accueil
-#########################################################################################################################################################
+########################################################################################################################
 
 label_principal = Label(fenetre, text="Veuillez passez votre badge")
 label_principal.pack(pady=20, padx=20)
-testbouton = Button(fenetre, text="simulation carte admin", command=construction_page_casier)
+testbouton = Button(fenetre, text="simulation carte admin", width=17, command=construction_page_casier, background="lightgrey")
 testbouton.pack()
+testBoutonEleve = Button(fenetre, text="simulation carte eleve", width=17, command=afficherbox, background="lightgrey")
+testBoutonEleve.pack()
 
-#################################################################################################################################################################
+########################################################################################################################
 
 
 # Casier
-#######################################################################################################################################################
+########################################################################################################################
 
 div_page_casier = Frame(fenetre)
 div_page_casier.pack(padx=20, pady=10)  # Ajout du padding à gauche et à droite de 20 pixels

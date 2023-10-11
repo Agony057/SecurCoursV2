@@ -1,9 +1,7 @@
 import mysql.connector
 
-baseDeDonnees = mysql.connector.connect(host="devbdd.iutmetz.univ-lorraine.fr", user="agozzino3u_appli",
-                                        password="32222926", database="agozzino3u_SAE_ProjetTuteure")
-# baseDeDonnees = mysql.connector.connect(host="localhost", user="root",
-#                                         password="", database="sae_projettuteure")
+baseDeDonnees = mysql.connector.connect(host="localhost", user="root",
+                                        password="", database="sae_projettuteure")
 cursor = baseDeDonnees.cursor()
 
 def demande_casier(casier):

@@ -19,7 +19,7 @@ signal.signal(signal.SIGINT, end_read)
 MIFAREReader = MFRC522.MFRC522()
 
 data = []
-texte = raw_input("Entrez une chaine de caractère :\n")
+texte = input("Entrez une chaine de caractère :\n")
 for c in texte:
     if (len(data)<16):
         data.append(int(ord(c)))
