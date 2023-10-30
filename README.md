@@ -1,2 +1,4 @@
 # securcoursV2
-branch pour les testes de l'interface sans acces bdd ni raspberry
+Pour executer le projet, lancez onepageFinal.py
+
+Le projet à été créer pour un lycée, le but était d'attribuer un casier à des élèves et de pouvoir gérer les élèves ainsi que leur casier.
